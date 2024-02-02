@@ -1,32 +1,53 @@
-const sliders = document.querySelectorAll("input[type='range']");
-sliders.forEach(function(slider){
-    slider.addEventListener("input",calculateTip);
+let equal_pressed = 0;
+//Refer all buttons excluding AC and DEL
+let button_input = document.querySelectorAll(".input-button");
+//Refer input,equal,clear and erase
+let input = document.getElementById("input");
+let equal = document.getElementById("equal");
+let clear = document.getElementById("clear");
+let erase = document.getElementById("erase");
+
+window.onload = () => {
+  input.value = "";
+};
+
+//Access each class using forEach
+button_input.forEach((button_class) => {
+  button_class.addEventListener("click", () => {
+    if (equal_pressed == 1) {
+      input.value = "";
+      equal_pressed = 0;
+    }
+    //display value of each button
+    input.value += button_class.value;
+  });
 });
 
-const billInput = document.getElementById("bill");
-billInput.addEventListener("change",calculateTip);
+//Solve the user's input when clicked on equal sign
+equal.addEventListener("click", () => {
+  equal_pressed = 1;
+  let inp_val = input.value;
+  try {
+    //evaluate user's input
+    let solution = eval(inp_val);
+    //True for natural numbers
+    //false for decimals
+    if (Number.isInteger(solution)) {
+      input.value = solution;
+    } else {
+      input.value = solution.toFixed(2);
+    }
+  } catch (err) {
+    //If user has entered invalid input
+    alert("Invalid Input");
+  }
+});
 
-
-function calculateTip(){
-    let bill = parseFloat(billInput.value);
-    let tipPercent = document.getElementById("tip").value;
-    let noOfPeople = document.getElementById("no-of-people").value;
-
-    billInput.value = bill.toFixed(2);
-
-    let totalTip = parseFloat((bill * (tipPercent/100)).toFixed(2));
-    let total = parseFloat((bill + totalTip).toFixed(2));
-
-    let tipPerPerson = (totalTip / noOfPeople).toFixed(2);
-    let totalPerPerson = (total / noOfPeople).toFixed(2);
-
-    document.getElementById("tip-amount").textContent = `\$ ${totalTip}`;
-    document.getElementById("total-amount").textContent = `\$ ${total}`;
-    
-    document.getElementById("tip-percent").textContent = `${tipPercent}%`;
-    document.getElementById("split-num").textContent = noOfPeople;
-
-    document.getElementById("tip-per-person").textContent = `\$ ${tipPerPerson}`;
-    document.getElementById("total-per-person").textContent = `\$ ${totalPerPerson}`;
-}
-calculateTip();
+//Clear Whole Input
+clear.addEventListener("click", () => {
+  input.value = "";
+});
+//Erase Single Digit
+erase.addEventListener("click", () => {
+  input.value = input.value.substr(0, input.value.length - 1);
+});
