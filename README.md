@@ -19,4 +19,4 @@ HTML5, CSS3: Building the structure and styling of the calculator interface.
 JavaScript: Handling mathematical computations and dynamic updates.
 
 ## Acknowledgments
-All my mentor, who taught me coding and friends who supported. And Most important Almighty who is guide and friend both.
+All my mentor, who taught me coding and friends who supported. And Most important Almighty who is both guide and friend to me.
